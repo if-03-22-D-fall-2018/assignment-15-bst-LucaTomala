@@ -20,20 +20,32 @@ struct Node{
   struct Node* left_subtree;
 };
 
-Bst new_bst(){
+Bst new_bst()
+{
   return 0;
 }
 
-void delete_bst(Bst bst){
-  if (bst != 0) {
+void delete_bst(Bst bst)
+{
+  if(bst != 0)
+  {
+    delete_bst(bst->left_subtree);
+    delete_bst(bst->right_subtree);
     sfree(bst);
   }
 }
 int get_depth(Bst bst){
-  if (bst == 0) {
+  if (bst == 0)
+  {
     return 0;
-  }else{
+  }
+  if(bst->right_subtree == 0 && bst->left_subtree == 0)
+  {
     return 1;
+  }
+  if(get_depth(right_subtree(bst)) >  get_depth(left_subtree(bst))) return 1 + get_depth(right_subtree(bst));
+  {
+    return 1 +get_depth(left_subtree(bst));
   }
 }
 void add(Bst* bst, int value){
@@ -41,40 +53,35 @@ void add(Bst* bst, int value){
   new_Node->value = value;
   new_Node->left_subtree = 0;
   new_Node->right_subtree = 0;
-  if (*bst == 0) {
+  if (*bst == 0)
+  {
     *bst = new_Node;
   }
-
-  /*
-  if (bst->value == 0) return 0;
-  if(bst->value <= value){
-    if (bst->left_subtree == 0;) {
-      Bst newNode = (Bst)malloc(sizeof(struct Node));
-      newNode->value = value;
-      newNode->left_subtree = 0;
-      newNode->right_subtree = 0;
+  else if(value<=(*bst)->value)
+  {
+    if((*bst)->left_subtree == 0)
+    {
+    (*bst)->left_subtree=new_Node;
     }
-    else{
-      return add(bst->left_subtree, value;)
+    else
+    {
+      add(&(*bst)->left_subtree, value);
     }
   }
-  else{
-    if (bst->right_subtree == 0;) {
-      Bst newNode = (Bst)malloc(sizeof(Node));
-      newNode->value = value;
-      newNode->left_subtree = 0;
-      newNode->right_subtree = 0;
+  else if(value>(*bst)->value)
+  {
+    if((*bst)->right_subtree == 0)
+    {
+      (*bst)->right_subtree=new_Node;
     }
-    else{
-      return add(bst->right_subtree, value;)
+    else
+    {
+      add(&(*bst)->right_subtree, value);
     }
   }
-  */
 }
 int root_value(Bst bst){
-  if (bst->value == 0) {
-    return 0;
-  }
+  return bst->value;
 }
 Bst left_subtree(Bst root){
   return root->left_subtree;
