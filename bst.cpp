@@ -90,16 +90,52 @@ Bst right_subtree(Bst root){
   return root->right_subtree;
 }
 int traverse_pre_order(Bst bst, int *elements, int start){
-  return 0;
+  if(bst != 0)
+  {
+        elements[start] = bst->value;
+        if(get_depth(bst) > 0)
+        {
+          start+=1;
+          start = traverse_pre_order(bst->left_subtree, elements, start);
+          start = traverse_pre_order(bst->right_subtree, elements, start);
+        }
+     }
+  return start;
 }
 int traverse_in_order(Bst bst, int *elements, int start){
-  return 0;
+  if(bst != 0)
+  {
+        if(get_depth(bst) > 0)
+        {
+
+          start = traverse_in_order(bst->left_subtree, elements, start);
+          elements[start] = bst->value;
+          start+=1;
+          start = traverse_in_order(bst->right_subtree, elements, start);
+        }
+     }
+  return start;
 }
 int traverse_post_order(Bst bst, int *elements, int start){
-  return 0;
+  if(bst != 0)
+  {
+        if(get_depth(bst) > 0)
+        {
+
+          start = traverse_post_order(bst->left_subtree, elements, start);
+          start = traverse_post_order(bst->right_subtree, elements, start);
+          elements[start] = bst->value;
+          start+=1;
+        }
+     }
+  return start;
 }
-bool are_equal(Bst bst1, Bst bst2){
-  return true;
+bool are_equal(Bst bst1, Bst bst2)
+{
+  if (bst2 == 0)
+  {
+    return bst1 == 0;
+  }
 }
 void most_left_longest_branch(Bst bst, Bst* branch){
 
